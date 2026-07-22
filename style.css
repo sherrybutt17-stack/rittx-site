@@ -212,6 +212,81 @@ p  { margin-bottom: 1rem; }
   transition: var(--transition);
 }
 
+/* ---- Nav dropdowns ----
+   Grouping the 13 public pages under four top-level items keeps the header row
+   short enough to fit beside the logo, and puts every page — including all five
+   policies — one hover away from the header. */
+.nav-group { position: relative; }
+.nav-group-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.nav-group-btn::after {
+  content: "";
+  border: solid currentColor;
+  border-width: 0 1.5px 1.5px 0;
+  padding: 2.5px;
+  transform: rotate(45deg) translateY(-1px);
+  transition: var(--transition);
+}
+.nav-group-btn:hover,
+.nav-group-btn.active,
+.nav-group:hover .nav-group-btn {
+  color: var(--white);
+  background: rgba(255,255,255,0.1);
+}
+.nav-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  min-width: 232px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+  padding: 8px;
+  z-index: 1100;
+}
+/* bridge the gap so the menu doesn't close while the cursor travels to it */
+.nav-group::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 12px;
+}
+.nav-group:hover .nav-dropdown,
+.nav-group:focus-within .nav-dropdown,
+.nav-group.open .nav-dropdown { display: block; }
+.nav-dropdown a {
+  display: block;
+  color: var(--navy);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 9px 14px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.nav-dropdown a:hover,
+.nav-dropdown a.active {
+  background: var(--off-white);
+  color: var(--gold-text);
+}
+
 /* Mobile nav */
 @media (max-width: 900px) {
   .nav-toggle { display: flex; }
@@ -234,6 +309,40 @@ p  { margin-bottom: 1rem; }
     font-size: 1rem;
   }
   .main-nav a.nav-cta { text-align: center; margin-top: 8px; }
+
+  /* Dropdowns become tap-to-expand accordions inside the mobile sheet */
+  .nav-group { width: 100%; }
+  .nav-group::after { display: none; }
+  .nav-group-btn {
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px 16px;
+    font-size: 1rem;
+  }
+  .nav-group:hover .nav-dropdown,
+  .nav-group:focus-within .nav-dropdown { display: none; }
+  .nav-group.open .nav-dropdown { display: block; }
+  .nav-group.open .nav-group-btn::after { transform: rotate(-135deg) translateY(-1px); }
+  .nav-dropdown {
+    position: static;
+    min-width: 0;
+    background: rgba(255,255,255,0.06);
+    border: none;
+    box-shadow: none;
+    border-radius: 8px;
+    margin: 4px 0 6px;
+    padding: 4px;
+  }
+  .nav-dropdown a {
+    color: rgba(255,255,255,0.85);
+    padding: 11px 16px 11px 28px;
+    font-size: 0.95rem;
+  }
+  .nav-dropdown a:hover,
+  .nav-dropdown a.active {
+    background: rgba(255,255,255,0.1);
+    color: var(--white);
+  }
 }
 
 /* ---- Hero ---- */
